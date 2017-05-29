@@ -1,6 +1,4 @@
-local M = class("HallScene",function ()
-    return cc.Scene:create()
-end)
+local M = class("HallScene", cc.load("mvc").ViewBase)
 
 function M:ctor()
 	self.frameSize = cc.Director:getInstance():getWinSize()

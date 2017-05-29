@@ -1,8 +1,6 @@
 local client = require "network.client"
 
-local M = class("LoginScene",function ()
-    return cc.Scene:create()
-end)
+local M = class("LoginScene", cc.load("mvc").ViewBase)
 
 function M:ctor()
 	self.frameSize = cc.Director:getInstance():getWinSize()
@@ -32,10 +30,7 @@ function M:initBgLayer()
 	self.bgLayer = bgLayer
 	
 	self.client = client.new()
-	self.client:connect("192.168.1.101", 8888)
-	self.client:send("login.login", {account = "a", passwd = "a"})
-	self.client:recv()
-	--c:close()
+	self.client:connect("222.73.139.48", 8080)
 end
 
 function M:initItems()
@@ -101,7 +96,6 @@ function M:OnLeave()
 end
 
 function M:BtnLogin()
-	print("BtnLogin")
 	local account = self.accountEdit:getText()
 	local passwd = self.passwdEdit:getText()
 	
@@ -113,12 +107,10 @@ function M:OnLoginResult()
 end
 
 function M:BtnRegister()
-	self.client:deal_one()
-	--print("BtnRegister")
-	--local account = self.accountEdit:getText()
-	--local passwd = self.passwdEdit:getText()
+	local account = self.accountEdit:getText()
+	local passwd = self.passwdEdit:getText()
 	
-	--self.client:send("login.register", {account = account, passwd = passwd})
+	self.client:send("login.register", {account = account, passwd = passwd})
 end
 
 function M:OnRegisterResult()
