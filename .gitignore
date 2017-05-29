@@ -1,0 +1,6 @@
+*.obj
+*.sdf
+*.pdb
+simulator/
+frameworks/runtime-src/proj.win32/Debug.win32/
+frameworks/cocos2d-x/

@@ -128,9 +128,7 @@
     <CustomBuildStep>
       <Command>if not exist "$(LocalDebuggerWorkingDirectory)" mkdir "$(LocalDebuggerWorkingDirectory)"
 xcopy /Y /Q "$(OutDir)*.dll" "$(LocalDebuggerWorkingDirectory)"
-xcopy /Y /Q "$(ProjectDir)..\Classes\ide-support\lang" "$(LocalDebuggerWorkingDirectory)"
-xcopy "$(ProjectDir)..\..\..\res" "$(LocalDebuggerWorkingDirectory)\res" /D /E /I /F /Y
-xcopy "$(ProjectDir)..\..\..\src" "$(LocalDebuggerWorkingDirectory)\src" /D /E /I /F /Y</Command>
+xcopy /Y /Q "$(ProjectDir)..\Classes\ide-support\lang" "$(LocalDebuggerWorkingDirectory)"</Command>
       <Outputs>$(TargetName).cab</Outputs>
       <Inputs>$(TargetFileName)</Inputs>
     </CustomBuildStep>
