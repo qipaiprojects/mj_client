@@ -14,7 +14,7 @@ function M.pack(proto_name, msg)
     local params_str = Utils.table_2_str(msg)
 	print("msg content:", params_str)
 	local len = 2 + 2 + #params_str
-	local data = string.pack(">h>hP", len, proto_id, params_str)
+	local data = Utils.int16_2_bytes(len) .. Utils.int16_2_bytes(proto_id) .. params_str)
     return data	
 end
 
