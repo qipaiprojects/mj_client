@@ -31,6 +31,7 @@ function M:initBgLayer()
 	
 	self.client = client.new()
 	self.client:connect("222.73.139.48", 8080)
+	self:register_msg_callback()
 end
 
 function M:initItems()
@@ -89,8 +90,24 @@ function M:initItems()
     end)
 end
 
+function M:update(delta)
+	print("update")
+	self.client:deal_msgs()
+end
+
+function M:register_msg_callback()
+	self.client:register("login.login", self, self.OnLoginResult)
+	self.client:register("login.register", self, self.OnRegisterResult)
+end
+
+function M:unregister_msg_callback()
+	self.client:unregister("login.login")
+	self.client:unregister("login.register")
+end
+
 function M:OnLeave()
 	if self.client then
+		self:unregister_msg_callback()
 		self.client:close()
 	end
 end
@@ -102,7 +119,7 @@ function M:BtnLogin()
 	self.client:send("login.login", {account = account, passwd = passwd})
 end
 
-function M:OnLoginResult()
+function M:OnLoginResult(msg)
 
 end
 
@@ -113,7 +130,7 @@ function M:BtnRegister()
 	self.client:send("login.register", {account = account, passwd = passwd})
 end
 
-function M:OnRegisterResult()
+function M:OnRegisterResult(msg)
 
 end
 

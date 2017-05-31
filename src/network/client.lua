@@ -16,6 +16,7 @@ function M:init()
 	self.last = ""
 	self.pack_list = {}
 	self.head = nil
+	self.callback_tbl = {}
 end
 
 function M:connect(ip, port)
@@ -33,10 +34,12 @@ function M:send(proto_name, msg)
    self.sock:send(packet)
 end
 
-function M:deal_one()
+function M:deal_msgs()
 	self:recv()
 	self:split_pack()
-	self:dispatch_one()
+	while self:dispatch_one() do
+	
+	end
 end
 
 function M:recv()
@@ -114,6 +117,17 @@ function M:dispatch_one()
 	print("split pack",#data)
 	local proto_name, params = Packer.unpack(data)
 	print("recv msg", proto_name)
+	local callback = self.callback_tbl[proto_name]
+	callback.callback(callback.obj, params)
+	return
+end
+
+function M:register(name, obj, callback)
+	self.callback_tbl[name] = {obj = obj, callback = callback}
+end
+
+function M:unregister(name)
+	self.callback_tbl[name] = nil
 end
 
 function M:close()
